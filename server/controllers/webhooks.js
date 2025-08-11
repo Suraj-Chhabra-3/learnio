@@ -1,7 +1,6 @@
 import { Webhook } from "svix";
 import User from "../models/User.js";
 import Stripe from "stripe";
-import { EndpointApi } from "svix/dist/openapi/index.js";
 import { Purchase } from "../models/Purchase.js";
 import Course from "../models/Course.js";
 
@@ -66,9 +65,10 @@ export const stripeWebHooks = async(request, response) => {
     try {
         event = Stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
     } catch (error) {
-        response.status(400).send(`webhook Error : ${error.message}`)
+        return response.status(400).send(`webhook Error : ${error.message}`)
     }
-
+    console.log("hello sir i am running");
+    
     // Handle the event
   switch (event.type) {
     case 'payment_intent.succeeded':{
