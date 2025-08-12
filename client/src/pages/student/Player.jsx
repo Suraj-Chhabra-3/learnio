@@ -53,8 +53,8 @@ const Player = () => {
 
   const markLectureAsCompleted = async(lectureId) => {
     try {
-      const {token} = getToken();
-      const {data} = await axios.post(backendUrl + '/api/user/update-course-progress', {courseId, lectureId} , {
+      const token = await getToken();
+      const { data } = await axios.post(backendUrl + '/api/user/update-course-progress', {courseId, lectureId} , {
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -92,8 +92,7 @@ const Player = () => {
 
   const handleRate = async(rating) => {
     try {
-      const {token} = getToken()
-      console.log(courseId);
+      const token = await getToken();
       
       const {data} = await axios.post(backendUrl + '/api/user/add-rating', {courseId, rating}, {
         headers: {
@@ -140,7 +139,7 @@ const Player = () => {
                 <ul className='list-disc md:pl-10 pl-4 pr-4 py-2 text-gray-600 border-t border-gray-300'>
                   {chapter.chapterContent.map( (lecture, i) => (
                     <li className='flex items-start gap-2 py-1' key={i}>
-                      <img src={progressData && progressData.lectureCompleted.includes(playerData.lectureId) ? assets.blue_tick_icon : assets.play_icon} alt="play_icon" className='w-4 h-4 mt-1'/>
+                      <img src={progressData && progressData.lectureCompleted.includes(lecture.lectureId) ? assets.blue_tick_icon : assets.play_icon} alt="play_icon" className='w-4 h-4 mt-1'/>
                       <div className='flex items-center justify-between w-full text-gray-800 text-xs md:text-default'>
                         <p>{lecture.lectureTitle}</p>
                         <div className='flex gap-2'>

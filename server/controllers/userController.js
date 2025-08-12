@@ -130,14 +130,8 @@ export const addUserRatings = async(req, res) => {
     const userId = req.auth.userId;
     const { courseId, rating } = req.body;
 
-    if(rating < 1) {
-        return res.json({message: "no"})
-    }
-    if(rating > 5) {
-        return res.json({message: "no"})
-    }
-    if((!userId) || (!courseId)) {
-        return res.json({success: false, message: "invalid Details"});
+    if(!userId || !courseId || !rating || rating > 5 || rating < 1) {
+        return res.json({message: "Invalid Request"})
     }
     try {
         const course = await Course.findById(courseId);
