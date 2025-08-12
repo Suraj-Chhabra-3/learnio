@@ -34,7 +34,6 @@ export const userEnrolledCourses = async(req, res) => {
 // purchase course 
 export const purchaseCourse = async(req, res) => {
     try {
-        console.log("hello sir i am running purchase");
         const { courseId } = req.body
         const { origin } = req.headers
         const userId = req.auth.userId
@@ -129,9 +128,15 @@ export const getUserCourseProgress = async(req, res) => {
 // add rating 
 export const addUserRatings = async(req, res) => {
     const userId = req.auth.userId;
-    const {courseId, rating} = req.body
+    const { courseId, rating } = req.body;
 
-    if(!userId || !courseId || !rating || rating < 1 || rating > 5) {
+    if(rating < 1) {
+        return res.json({message: "no"})
+    }
+    if(rating > 5) {
+        return res.json({message: "no"})
+    }
+    if((!userId) || (!courseId)) {
         return res.json({success: false, message: "invalid Details"});
     }
     try {
@@ -157,10 +162,10 @@ export const addUserRatings = async(req, res) => {
         }
         await course.save();
 
-        return res.json({success: true, message: 'rating needed'})
+        return res.json({success: true, message: 'rating added'});
 
     } catch (error) {
-        res.json({success: false, message: error.message})
+        return res.json({success: false, message: error.message});
     }
 
 }

@@ -67,7 +67,6 @@ export const stripeWebHooks = async(request, response) => {
     } catch (error) {
         return response.status(400).send(`webhook Error : ${error.message}`)
     }
-    console.log("hello sir i am running");
     
     // Handle the event
   switch (event.type) {
