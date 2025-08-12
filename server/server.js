@@ -16,7 +16,7 @@ const app = express();
 await connectDB();
 await connectCloudinary();
 
-const allowedOrigins = ['http://localhost:5173', '']
+const allowedOrigins = ['http://localhost:5173']
 
 // middlewares
 app.use(cors({origin : allowedOrigins, credentials: true}));
